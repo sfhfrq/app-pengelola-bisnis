@@ -1,0 +1,32 @@
+{
+  "name": "backend-pengelola-bisnis",
+  "version": "1.0.0",
+  "description": "REST API aplikasi pengelola bisnis (produk, transaksi, auth)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "db:setup": "node dbSetup.js",
+    "user:password": "node gantiPassword.js",
+    "demo:pasang": "node seedDemo.js",
+    "demo:hapus": "node seedDemo.js --hapus",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [],
+  "author": "Nama Anda",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.24.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

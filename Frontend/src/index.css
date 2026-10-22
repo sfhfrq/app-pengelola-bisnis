@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+/* =========================================================
+   Design token — diambil dari gambar referensi (Jobbio).
+   Semua warna "keras" (hitam pekat, abu terang) didefinisikan
+   di sini supaya konsisten di seluruh komponen.
+   ========================================================= */
+@theme {
+    --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system,
+        "Segoe UI", Roboto, sans-serif;
+
+    --color-ink: #0d0d0f;          /* hitam aksen: pill aktif, tombol, bar */
+    --color-canvas: #f6f7f8;       /* latar area konten */
+    --color-frame: #e9ebee;        /* latar luar halaman */
+    --color-line: #ecedef;         /* garis tepi kartu */
+    --color-line-soft: #f2f3f5;    /* garis pemisah baris tabel */
+    --color-muted: #8b9099;        /* teks sekunder terang */
+    --color-subtle: #6b7280;       /* teks sekunder */
+    --color-chip: #f1f2f4;         /* latar lingkaran ikon & badge */
+}
+
+@layer base {
+    html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        margin: 0;
+        background-color: var(--color-frame);
+        color: var(--color-ink);
+        font-family: var(--font-sans);
+    }
+
+    /* Angka statistik sebaiknya rata lebar supaya tidak "goyang". */
+    .tabular {
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+@layer utilities {
+    /* Strip kartu statistik: scroll horizontal tanpa scrollbar terlihat,
+       supaya potongan kartu di tepi kanan terlihat seperti referensi. */
+    .no-scrollbar {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* =========================================================
+   Animasi — sengaja minimalis: fade, naik sedikit, dan bar
+   grafik tumbuh. Tidak ada bounce atau efek berlebihan.
+   ========================================================= */
+@keyframes pb-rise {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes pb-fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pb-grow {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes pb-grow-x {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes pb-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.97) translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes pb-drop {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes pb-slide-left {
+    from {
+        opacity: 0;
+        transform: translateX(12px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.anim-rise {
+    animation: pb-rise 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.anim-fade {
+    animation: pb-fade 0.3s ease-out both;
+}
+.anim-pop {
+    animation: pb-pop 0.22s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.anim-drop {
+    animation: pb-drop 0.24s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.anim-slide-left {
+    animation: pb-slide-left 0.26s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Bar grafik tumbuh dari garis dasar.
+   transform-box: fill-box membuat transform-origin relatif ke rect,
+   bukan ke seluruh kanvas SVG. */
+.chart-bar {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: pb-grow 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Batang mendatar (tabel laporan) — tumbuh dari kiri. */
+.bar-x {
+    transform-origin: 0 50%;
+    animation: pb-grow-x 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Hormati preferensi pengguna yang tidak ingin animasi. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}

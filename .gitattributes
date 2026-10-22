@@ -1,0 +1,15 @@
+# Normalisasi akhir baris.
+#
+# Tanpa berkas ini, Git di Windows mengubah LF menjadi CRLF saat checkout,
+# sehingga setiap berkas tampak "berubah" padahal isinya sama. GitHub Actions
+# berjalan di Linux, jadi simpan LF saja di repo dan seragamkan di semua OS.
+* text=auto eol=lf
+
+# Berkas biner — akhir barisnya jangan pernah diubah.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary

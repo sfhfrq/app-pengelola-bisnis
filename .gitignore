@@ -1,0 +1,43 @@
+# =========================================================
+# Dependencies
+# =========================================================
+node_modules/
+
+# =========================================================
+# Hasil build
+# =========================================================
+dist/
+dist-ssr/
+build/
+
+# =========================================================
+# Environment — JANGAN PERNAH di-commit.
+# Berisi JWT_SECRET dan kredensial database.
+# =========================================================
+.env
+.env.local
+.env.*.local
+
+# =========================================================
+# Log
+# =========================================================
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# =========================================================
+# Hasil ekspor dari tombol "Export" di aplikasi.
+# Ini berkas keluaran, bukan berkas sumber — jangan ikut ter-commit.
+# =========================================================
+/Backend/produk-*.csv
+
+# Berkas kunci sementara Microsoft Office / Excel (mis. "~$produk.csv").
+~$*
+
+# =========================================================
+# Editor & OS
+# =========================================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

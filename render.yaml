@@ -1,0 +1,59 @@
+# Blueprint Render (OPSIONAL).
+#
+# Cara pakai:
+#   Render Dashboard -> New + -> Blueprint -> pilih repo ini -> Apply.
+# Render akan membaca berkas ini dan membuat web service dengan
+# konfigurasi di bawah. Anda hanya perlu mengisi variabel yang
+# ditandai `sync: false` (diisi manual lewat dashboard).
+#
+# Kalau blueprint ini gagal karena skema Render berubah, ikuti saja
+# langkah manual di DEPLOY.md — hasilnya sama.
+#
+# CATATAN: Render TIDAK menyediakan MySQL gratis (yang gratis hanya
+# PostgreSQL, dan itu pun kedaluwarsa 30 hari). Database MySQL harus
+# dari penyedia lain: TiDB Cloud, Aiven, Railway, atau sejenisnya.
+
+services:
+  - type: web
+    name: pengelola-bisnis-api
+    runtime: node
+    plan: free
+    region: singapore
+    rootDir: Backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+
+      # Dibuat otomatis dengan nilai acak oleh Render.
+      - key: JWT_SECRET
+        generateValue: true
+
+      # --- Diisi manual dari dashboard Render ---
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+
+      # Penyedia MySQL cloud umumnya mewajibkan TLS.
+      - key: DB_SSL
+        value: "true"
+
+      # Penyedia gratis membatasi jumlah koneksi — jangan besar-besar.
+      - key: DB_POOL_LIMIT
+        value: "5"
+
+      # Origin frontend, TANPA path dan TANPA garis miring di akhir.
+      # Contoh: https://namaanda.github.io
+      - key: CORS_ORIGIN
+        sync: false
